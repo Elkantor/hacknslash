@@ -9,13 +9,13 @@ Associated data which can be used by this module are inside the **[src/data/data
 ---
 
 ### functions
-- <em>[void flush(const char* in_file_name)](#h6-void-flush(const-char*-in_file_name-)</em>
-- <em>[int logging_open(FILE** out_log_file, const char* in_file_name)](#h6-int-logging_open-file-em-out_log_file-const-char-em-in_file_name-)</em>
+- <em>[void flush(const char* in_file_name)](#void-flushconst-char-in_file_name)</em>
+- <em>[int open(FILE** out_log_file, const char* in_file_name)](#int-logging_openfile-out_log_file-const-char-in_file_name)</em>
 
 ---
 </br>
 
-###### void flush(const char* in_file_name)
+##### void flush(const char* in_file_name)
 
 _Clean the content of the logging file_
 
@@ -30,7 +30,7 @@ or by including the associated data_logging.c file:
 ***
 </br>
 
-###### int logging_open(FILE** out_log_file, const char* in_file_name)
+##### int logging_open(FILE** out_log_file, const char* in_file_name)
 
 _Open the logging file at the in_file_name name (you can give it the path + the name too)_
 
