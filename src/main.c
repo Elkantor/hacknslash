@@ -5,12 +5,19 @@
 #include "config/windows.c"
 
 #include "data/inputs.c"
+#include "data/player.c"
 
+#include "modules/logging.c"
 #include "modules/inputs.c"
 #include "modules/math.c"
 
 int main(int argc, char** argv){
-    InitWindow(1920, 1080, "hacknslash");
+    fclose(fopen("log.txt", "w")); // flush the content from the log file
+    FILE* log_file = NULL;
+    logging.open(log_file, "log.txt");
+    fprintf(log_file, "- Screens: %d\n", GetMonitorCount());
+
+    InitWindow(0, 0, "hacknslash");
     SetTargetFPS(60);
     
     data_inputs.keys[data_inputs_key_up] = KEY_W;
@@ -20,7 +27,7 @@ int main(int argc, char** argv){
 
         BeginDrawing();
             ClearBackground(LIGHTGRAY);
-            DrawFPS(1800, 40);
+            DrawFPS(80, 80);
 
             // draw the grid
             // draw the X lines
@@ -36,4 +43,5 @@ int main(int argc, char** argv){
 
 
     CloseWindow();
+    fclose(log_file);
 }
