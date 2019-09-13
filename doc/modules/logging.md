@@ -15,7 +15,7 @@ Associated data which can be used by this module are inside the **[src/data/data
 ---
 </br>
 
-##### void flush(const char* in_file_name)
+#### void flush(const char* in_file_name)
 
 _Clean the content of the logging file_
 
@@ -30,7 +30,7 @@ or by including the associated data_logging.c file:
 ***
 </br>
 
-##### int logging_open(FILE** out_log_file, const char* in_file_name)
+#### int logging_open(FILE** out_log_file, const char* in_file_name)
 
 _Open the logging file at the in_file_name name (you can give it the path + the name too)_
 
