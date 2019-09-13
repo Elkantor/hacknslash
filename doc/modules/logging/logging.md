@@ -91,7 +91,7 @@ _You always should call this function when you opened up a file before._
 or by including the associated data_logging.c file:
 ```c
     logging.open(data_logging.file, "log.html");
-    logging.write(data_logging.file, "red", "%s %l", "this is a new stuff", 5165454);
+    logging.write(data_logging.file, "red", "%s %ld", "this is a new stuff", 5165454);
     logging.close(data_logging.file);
 ```
 
@@ -109,7 +109,7 @@ or by including the associated data_logging.c file:
         logging.flush(data_logging.file_name);
         logging.open(data_logging.file, data_logging.file_name);
         
-        logging.write(data_logging.file, "red", "%s %l", "this is a new stuff", 5165454);
+        logging.write(data_logging.file, "red", "%s %ld", "this is a new stuff", 5165454);
         const char* html_content = "<em>this is a test in italic mode</em>";
         logging.write(data_logging.file, "black", "%s", html_content);
 
