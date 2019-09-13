@@ -11,6 +11,8 @@ Associated data which can be used by this module are inside the **[src/data/data
 ### functions
 - <em>[void flush(const char* in_file_name)](#void-flushconst-char-in_file_name)</em>
 - <em>[int open(FILE** out_log_file, const char* in_file_name)](#int-logging_openfile-out_log_file-const-char-in_file_name)</em>
+- <em>[int write(FILE** out_log_file, const char* in_color, const char* in_text, ...)](#int-writefile-out_log_file-const-char-in_color-const-char-in_text-)</em>
+- <em>[void close(FILE** out_log_file)](#void-closefile-out_log_file)</em>
 
 #### [Full example how to use it](full-example-in-practice)
 
