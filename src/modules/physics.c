@@ -63,7 +63,7 @@ void rectangles_collisions_calculate(
             const unsigned short in_idx_new_color
         );
     } 
-#if defined module_inputs
+#if defined module_physics
     ;
 #else   
     physics = {

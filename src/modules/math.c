@@ -15,6 +15,6 @@ float square_root(const float in_float){
     ;
 #else
     maths = {
-        square_root = square_root,
+        .square_root = square_root,
     };
 #endif
