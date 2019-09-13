@@ -1,0 +1,2 @@
+## How works logging
+

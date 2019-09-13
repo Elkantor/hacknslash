@@ -1,30 +1,23 @@
-#include <stdio.h>
 #include <raylib.h>
 
 #include "config.c"
 #include "config/windows.c"
 
-#include "data/inputs.c"
-#include "data/player.c"
+#include "modules/inputs.c"
+#include "data/data_inputs.c"
 
 #include "modules/logging.c"
-#include "modules/inputs.c"
-#include "modules/math.c"
+#include "data/logging.c"
+
+#include "data/data_player.c"
 
 int main(int argc, char** argv){
-    fclose(fopen("log.txt", "w")); // flush the content from the log file
-    FILE* log_file = NULL;
-    logging.open(log_file, "log.txt");
-    fprintf(log_file, "- Screens: %d\n", GetMonitorCount());
-
     InitWindow(0, 0, "hacknslash");
     SetTargetFPS(60);
     
     data_inputs.keys[data_inputs_key_up] = KEY_W;
     
     while(!WindowShouldClose()){
-
-
         BeginDrawing();
             ClearBackground(LIGHTGRAY);
             DrawFPS(80, 80);
