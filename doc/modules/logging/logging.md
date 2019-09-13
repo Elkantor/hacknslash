@@ -12,6 +12,8 @@ Associated data which can be used by this module are inside the **[src/data/data
 - <em>[void flush(const char* in_file_name)](#void-flushconst-char-in_file_name)</em>
 - <em>[int open(FILE** out_log_file, const char* in_file_name)](#int-logging_openfile-out_log_file-const-char-in_file_name)</em>
 
+#### [Full example how to use it](full-example-in-practice)
+
 ---
 </br>
 
