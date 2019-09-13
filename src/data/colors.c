@@ -1,5 +1,5 @@
 #if defined _WIN32 && defined data_colors_build_dll
-    #define DATA_COLORS __declspec(dllexpor) // We are building data_colors as a win32 shared library (.dll)
+    #define DATA_COLORS __declspec(dllexport) // We are building data_colors as a win32 shared library (.dll)
 #elif defined _WIN32 && defined data_colors 
     #define DATA_COLORS __declspec(dllimport) // we are using data_colors as a win32 shared library (.dll)
 #else
