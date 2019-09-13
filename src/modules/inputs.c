@@ -28,8 +28,7 @@ void action_handle(
     const
 #endif
     struct inputs {
-        void (*const action_handle)(const unsigned short in_keys_count, const int in_keys[static in_keys_count], int out_actions[static 2], bool (*const in_is_key_down)(const int in_key)),
-
+        void (*const action_handle)(const unsigned short in_keys_count, const int in_keys[static in_keys_count], int out_actions[static 2], bool (*const in_is_key_down)(const int in_key));
     }
 #if defined module_inputs
     ;

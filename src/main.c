@@ -7,7 +7,7 @@
 #include "data/inputs.c"
 
 #include "modules/inputs.c"
-#include "modules/maths.c"
+#include "modules/math.c"
 
 int main(int argc, char** argv){
     InitWindow(1920, 1080, "hacknslash");
