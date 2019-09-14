@@ -2,11 +2,11 @@
 #include <stdarg.h>
 
 #if defined _WIN32 && defined module_logging_build_dll
-    #define LOGGING __declspec(dllexport) // We are building log as a win32 shared library (.dll)
+    #define LOGGING __declspec(dllexport) // We are building logging as a win32 shared library (.dll)
 #elif defined _WIN32 && defined module_logging
-    #define LOGGING __declspec(dllimport) // we are using log as a win32 shared library (.dll)
+    #define LOGGING __declspec(dllimport) // we are using logging as a win32 shared library (.dll)
 #else
-    #define LOGGING // We are building or using log as a static library (or a shared one on linux)
+    #define LOGGING // We are building or using logging as a static library (or a shared one on linux)
 #endif
 
 void logging_flush(const char* in_file_name){
@@ -65,9 +65,9 @@ int logging_write(FILE** out_log_file, const char* in_color, const char* in_text
     ;
 #else
     logging = {
-        .flush  = logging_flush,
-        .close  = logging_close,
-        .open   = logging_open,
-        .write  = logging_write,
+        .flush              = logging_flush,
+        .close              = logging_close,
+        .open               = logging_open,
+        .write              = logging_write,
     };
 #endif
