@@ -32,6 +32,7 @@ const char* modules_hot_reload[] = {
 // #define data_inputs
 // #define data_logging
 // #define data_player
+// #define data_ui
 
 const char* data_hot_reload[] = {
     #if defined data_colors

@@ -9,22 +9,19 @@
 #if !defined data_colors
     const
 #endif
-    struct data_colors {
-        const int colors[];
+    struct DATA_COLORS data_colors {
         const int blue;
         const int red;
         const int black;
-        const unsigned short count;
+        const int light_gray_ui;
     } 
 #if defined data_colors
     ;
 #else
     data_colors = {
-        .blue = 0,
-        .red = 1,
-        .black = 2,
-        // COLORS    0              1               2
-        .colors =  { 7991807,      -433506305,     255 },
-        .count = sizeof(data_colors.colors)/sizeof(data_colors.colors[0]),
+        .blue           = 7991807,
+        .red            = -433506305,
+        .black          = 255,
+        .light_gray_ui  = -960779264,
     };
 #endif
