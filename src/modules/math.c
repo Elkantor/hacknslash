@@ -8,13 +8,15 @@ float square_root(const float in_float){
 #if !defined module_math
     const
 #endif
-    struct maths {
+    struct math {
         float (*const square_root)(const float in_float);
+        const double phi;
     }
 #if defined module_math
     ;
 #else
-    maths = {
+    math = {
         .square_root = square_root,
+        .phi = 1.61803398874989484820,
     };
 #endif

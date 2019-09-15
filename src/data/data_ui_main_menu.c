@@ -6,9 +6,9 @@
     #define DATA_UI_MAIN_MENU // We are building or using data_ui_main_menu as a static library (or a shared one on linux)
 #endif
 
-unsigned int data_ui_main_menu_textures_id[3];
-unsigned short data_ui_main_menu_loaded;
-unsigned short data_ui_main_menu_current_idx;
+unsigned int data_ui_main_menu_textures_id[5];
+unsigned short data_ui_main_menu_loaded = 0;
+unsigned short data_ui_main_menu_current_idx = 0;
 
 #if !defined data_ui_main_menu
     const 

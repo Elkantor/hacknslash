@@ -13,6 +13,8 @@
 #include "modules/logging.c"
 #include "data/data_logging.c"
 
+#include "modules/math.c"
+
 #include "data/data_colors.c"
 #include "data/data_ui_main_menu.c"
 
@@ -49,8 +51,8 @@ int main(int argc, char** argv){
 
     /* LOAD THE TEXTURES FOR THE UI */
     {
-        Texture2D left_arrow_tex = LoadTexture("data/ui/main_menu/background.jpg");
-        *(data_ui_main_menu.ids + *data_ui_main_menu.current_loaded) = left_arrow_tex.id;
+        Texture2D background_tex = LoadTexture("data/ui/main_menu/background.jpg");
+        *(data_ui_main_menu.ids + *data_ui_main_menu.current_loaded) = background_tex.id;
         *data_ui_main_menu.current_loaded += 1;
     }
     {
@@ -62,6 +64,11 @@ int main(int argc, char** argv){
         ImageFlipHorizontal(&left_arrow_img);
         Texture2D right_arrow_tex = LoadTextureFromImage(left_arrow_img);
         *(data_ui_main_menu.ids + *data_ui_main_menu.current_loaded) = right_arrow_tex.id;
+        *data_ui_main_menu.current_loaded += 1;
+    }
+    {
+        Texture2D bottom_bar_tex = LoadTexture("data/ui/main_menu/bottom_bar.png");
+        *(data_ui_main_menu.ids + *data_ui_main_menu.current_loaded) = bottom_bar_tex.id;
         *data_ui_main_menu.current_loaded += 1;
     }
     {
@@ -124,9 +131,14 @@ int main(int argc, char** argv){
                 }
             }
             {
+                Texture2D bottom_bar = { *(data_ui_main_menu.ids + *data_ui_main_menu.current_idx), ui_bottom_bar_width, ui_bottom_bar_height, 1, 7 };
+                *data_ui_main_menu.current_idx += 1;
+                DrawTexture(bottom_bar, 0, 1080 - bottom_bar.height, WHITE);
+            }
+            {
                 Texture2D play_button = { *(data_ui_main_menu.ids + *data_ui_main_menu.current_idx), ui_play_button_width, ui_play_button_height, 1, 7 };
                 *data_ui_main_menu.current_idx += 1;
-                Vector2 position = { ((1920)/2) - ((ui_play_button_width/3)/2), (1080/40)*38 - play_button.height };
+                Vector2 position = { ((1920)/2) - ((ui_play_button_width/3)/2), 1080 - 62 - play_button.height/2 + 5 };
                 Rectangle button_rec = { position.x, position.y, play_button.width/3, play_button.height };
                 if(CheckCollisionPointRec(GetMousePosition(), button_rec)){
                     if(IsMouseButtonDown(0)){
@@ -137,7 +149,7 @@ int main(int argc, char** argv){
                 }else{
                     DrawTextureRec(play_button, ui_play_button_rectangle, position, WHITE);
                 }
-                DrawTextEx(test, "PLAY", (Vector2){ position.x + (play_button.width/3)/2 - 2*(48/1.6180339887), position.y + 25}, 48, 1, WHITE);
+                DrawTextEx(test, "PLAY", (Vector2){ position.x + (play_button.width/3)/2 - 2*(48/math.phi), position.y + 25}, 48, 1, WHITE);
             }
             DrawFPS(1800, 40);
         EndDrawing();
