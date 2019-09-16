@@ -87,7 +87,7 @@ _You always should call this function when you opened up a file before._
 ```c
     FILE* my_file;
     logging.open(&my_file, "log.html");
-    logging.write(&my_file, "red", "%s %l", "this is a new stuff", 5165454);
+    logging.write(&my_file, "red", "%s %ld", "this is a new stuff", 5165454);
     logging.close(&my_file);
 ```
 or by including the associated data_logging.c file:
