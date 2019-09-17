@@ -31,7 +31,7 @@ int logging_open(FILE** out_log_file, const char* in_file_name){
     return 1;
 }
 
-int logging_write(FILE** out_log_file, const char* in_color, const char* in_text, ...){
+int logging_write(FILE** out_log_file, const char* in_text, ...){
     if(*out_log_file == NULL){
         printf("Can't write in the logging file\n");
         return -1;
@@ -46,9 +46,8 @@ int logging_write(FILE** out_log_file, const char* in_color, const char* in_text
     va_list args;
     va_start(args, in_text);
     va_end(args);
-    fprintf(*out_log_file, "<font color=\"%s\">", in_color);
     vfprintf(*out_log_file, in_text, args);
-    fprintf(*out_log_file, "</font></br>\n");
+    fprintf(*out_log_file, "</br>");
     return 1;
 }
 
@@ -59,7 +58,7 @@ int logging_write(FILE** out_log_file, const char* in_color, const char* in_text
         void (*const flush)(const char* in_file_name);
         void (*const close)(FILE** out_log_file);
         int (*const open)(FILE** out_log_file, const char* in_file_name);
-        int (*const write)(FILE** out_log_file, const char* in_color, const char* in_text, ...);
+        int (*const write)(FILE** out_log_file, const char* in_text, ...);
     }
 #if defined module_logging
     ;
