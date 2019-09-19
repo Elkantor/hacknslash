@@ -1,3 +1,11 @@
+#if defined _WIN32 && defined module_export
+    #define PHYSICS __declspec(dllexport) // We are building logging as a win32 shared library (.dll)
+#elif defined _WIN32 && defined module_import
+    #define PHYSICS __declspec(dllimport) // we are using logging as a win32 shared library (.dll)
+#else
+    #define PHYSICS // We are building or using logging as a static library (or a shared one on linux)
+#endif
+
 /*
     Collision method: simple AABB
     Check for every static rectangles passed in parameter if a dynamic rectangle,
@@ -44,29 +52,22 @@ void rectangles_collisions_calculate(
     }
 }
 
-#if !defined module_physics
-    const
-#endif
-    struct physics {
-        void (*const rectangles_collisions_calculate)(
-            const int in_size_static_rectangles,
-            const float in_static_rectangles_x[static in_size_static_rectangles],
-            const float in_static_rectangles_y[static in_size_static_rectangles],
-            const unsigned short in_static_rectangles_width[static in_size_static_rectangles],
-            const unsigned short in_static_rectangles_height[static in_size_static_rectangles],
-            const int in_size_dynamic_rectangles,
-            const float in_dynamic_rectangles_x[static in_size_dynamic_rectangles],
-            const float in_dynamic_rectangles_y[static in_size_dynamic_rectangles],
-            const unsigned short in_dynamic_rectangles_width[static in_size_dynamic_rectangles],
-            const unsigned short in_dynamic_rectangles_height[static in_size_dynamic_rectangles],
-            unsigned short out_static_rectangles_colors_idx[static in_size_static_rectangles],
-            const unsigned short in_idx_new_color
-        );
-    } 
-#if defined module_physics
-    ;
-#else   
-    physics = {
-        .rectangles_collisions_calculate = rectangles_collisions_calculate,
-    };
-#endif
+
+const struct PHYSICS physics {
+    void (*const rectangles_collisions_calculate)(
+        const int in_size_static_rectangles,
+        const float in_static_rectangles_x[static in_size_static_rectangles],
+        const float in_static_rectangles_y[static in_size_static_rectangles],
+        const unsigned short in_static_rectangles_width[static in_size_static_rectangles],
+        const unsigned short in_static_rectangles_height[static in_size_static_rectangles],
+        const int in_size_dynamic_rectangles,
+        const float in_dynamic_rectangles_x[static in_size_dynamic_rectangles],
+        const float in_dynamic_rectangles_y[static in_size_dynamic_rectangles],
+        const unsigned short in_dynamic_rectangles_width[static in_size_dynamic_rectangles],
+        const unsigned short in_dynamic_rectangles_height[static in_size_dynamic_rectangles],
+        unsigned short out_static_rectangles_colors_idx[static in_size_static_rectangles],
+        const unsigned short in_idx_new_color
+    );
+} physics = {
+    .rectangles_collisions_calculate = rectangles_collisions_calculate,
+};

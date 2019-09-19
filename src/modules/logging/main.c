@@ -1,5 +1,5 @@
-#include "../logging.c"
-#include "../../data/data_logging.c"
+#include "logging.c"
+#include "data_logging.c"
 
 int main(int argc, char** argv){
     // clear the logging file (by default called log.html as the data_logging.file_name variable)

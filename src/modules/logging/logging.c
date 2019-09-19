@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#if defined _WIN32 && defined module_logging_build_dll
+#if defined _WIN32 && defined module_export
     #define LOGGING __declspec(dllexport) // We are building logging as a win32 shared library (.dll)
-#elif defined _WIN32 && defined module_logging
+#elif defined _WIN32 && defined module_import
     #define LOGGING __declspec(dllimport) // we are using logging as a win32 shared library (.dll)
 #else
     #define LOGGING // We are building or using logging as a static library (or a shared one on linux)
@@ -51,22 +51,15 @@ int logging_write(FILE** out_log_file, const char* in_text, ...){
     return 1;
 }
 
-#if !defined module_logging
-    const 
-#endif
-    struct LOGGING logging {
-        void (*const flush)(const char* in_file_name);
-        void (*const close)(FILE** out_log_file);
-        int (*const open)(FILE** out_log_file, const char* in_file_name);
-        int (*const write)(FILE** out_log_file, const char* in_text, ...);
-    }
-#if defined module_logging
-    ;
-#else
-    logging = {
-        .flush              = logging_flush,
-        .close              = logging_close,
-        .open               = logging_open,
-        .write              = logging_write,
-    };
-#endif
+
+const struct LOGGING logging {
+    void (*const flush)(const char* in_file_name);
+    void (*const close)(FILE** out_log_file);
+    int (*const open)(FILE** out_log_file, const char* in_file_name);
+    int (*const write)(FILE** out_log_file, const char* in_text, ...);
+} logging = {
+    .flush              = logging_flush,
+    .close              = logging_close,
+    .open               = logging_open,
+    .write              = logging_write,
+};
