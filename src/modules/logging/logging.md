@@ -122,6 +122,6 @@ or by including the associated data_logging.c file:
 
 Which gives this result, when you see the log.html file from your web browser:
 
-<img src="./logging_file_result_example.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" />
+<img src="./doc_images/logging_file_result_example.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" />
 
 ***

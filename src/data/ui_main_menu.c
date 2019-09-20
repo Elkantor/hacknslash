@@ -1,66 +1,108 @@
+#ifndef UI_MAIN_MENU_H
+#define UI_MAIN_MENU_H
+
 #if !defined RAYLIB_H
     #include <raylib.h>
 #endif
 
+#include "../data.c"
+#include "../modules/screen/screen.c"
+#include "../modules/math/math.c"
+
 /************************************* [DATA] *************************************************/
-struct data_ui_main_menu {
-    unsigned int textures_ids[7];
-    unsigned short textures_loaded_count;
-    unsigned short textures_current_idx;
-    unsigned int render_textures_ids[1];
-    unsigned short render_textures_loaded_count;
-    unsigned short render_textures_current_idx;
-} data_ui_main_menu = {
-    .textures_ids                   = {0},
-    .textures_loaded_count          = 0,
-    .textures_current_idx           = 0,
-    .render_textures_ids            = {0},
-    .render_textures_loaded_count   = 0,
-    .render_textures_current_idx    = 0,
-};
+_Bool ui_main_menu_loaded = false;
 
 /************************************* [PROCEDURES] *******************************************/
-/* 
-    Load a texture and add its id to the out_textures_ids table, at the in_textures_loaded_count position.
-    Return the new number of textures loaded (previous in_textures_loaded_count + 1).
-*/
-void ui_main_menu_texture_load(const char* in_path, struct data_ui_main_menu* out_data){
-    Texture2D texture = LoadTexture(in_path);
-    out_data->textures_ids[out_data->textures_loaded_count] = texture.id;
-    out_data->textures_loaded_count += 1;
+static inline void ui_main_menu_load(void){
+    screen_texture_load("data/ui/main_menu/background.jpg");
+    screen_texture_load("data/ui/main_menu/character_selection/trim_textures/trim_arrow_left_select.png");
+    screen_texture_load("data/ui/main_menu/bottom_bar.png");
+    screen_texture_load("data/ui/main_menu/character_selection/trim_textures/trim_play_button.png");
+    screen_texture_load("data/ui/main_menu/trim_textures/trim_symbols_right.png");
+
+    screen_render_texture_load(ui_arrow_width, ui_arrow_height);
+
+    ui_main_menu_loaded = true;
 }
 
-void ui_main_menu_textures_unload(struct data_ui_main_menu* out_data){
-    for(unsigned short i = data_ui_main_menu.textures_loaded_count; i > 0; --i){
-        Texture2D texture = (Texture2D){ data_ui_main_menu.textures_ids[i-1], 0, 0, 1, 7 };
-        UnloadTexture(texture);
+static inline void ui_main_menu_unload(void){
+    screen_render_textures_unload();
+    screen_textures_unload();
+    ui_main_menu_loaded = false;
+}
+
+void ui_main_menu_draw(void){
+    {
+        int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+        Texture2D background = { current_texture_id, ui_background_width, ui_background_height, 1, 7 };
+        screen_data_textures_current_idx += 1;
+        DrawTexture(background, 0, 0, WHITE);
+    }
+    {
+        int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+        Texture2D left_arrow = { current_texture_id, ui_arrow_width, ui_arrow_height, 1, 7 };
+        screen_data_textures_current_idx += 1;
+        Vector2 position = { (1920/40), 500 };
+        Rectangle left_arrow_rec = { position.x, position.y, left_arrow.width, left_arrow.height/3 };
+        DrawTextureRec(left_arrow, ui_arrow_rectangle, position, WHITE);
+        if(CheckCollisionPointRec(GetMousePosition(), left_arrow_rec)){
+            if(IsMouseButtonDown(0)){
+                DrawTextureRec(left_arrow, ui_arrow_rectangle_pressed, position, WHITE);
+            }else{
+                DrawTextureRec(left_arrow, ui_arrow_rectangle_hovered, position, WHITE);
+            }
+        }
+
+        Vector2 right_arrow_origin = { left_arrow.width/2, left_arrow.height/2};
+        DrawTexture
+    }
+    // {
+    //     int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+    //     // Texture2D right_arrow = { current_texture_id, ui_arrow_width, ui_arrow_height, 1, 7 };
+    //     Texture2D right_arrow_tex = { current_texture_id, ui_arrow_width, ui_arrow_height, 1, 7 };
+    //     screen_data_textures_current_idx += 1;
+    //     Vector2 position = { (1920/40)*39 - right_arrow_tex.width, 500 };
+    //     Rectangle right_arrow_rec = { position.x, position.y, right_arrow_tex.width, right_arrow_tex.height/3 };
+    //     DrawTextureRec(right_arrow_tex, ui_arrow_rectangle, position, WHITE);
+    //     if(CheckCollisionPointRec(GetMousePosition(), right_arrow_rec)){
+    //         if(IsMouseButtonDown(0)){
+    //             DrawTextureRec(right_arrow_tex, ui_arrow_rectangle_pressed, position, WHITE);
+    //         }else{
+    //             DrawTextureRec(right_arrow_tex, ui_arrow_rectangle_hovered, position, WHITE);
+    //         }
+    //     }
+    // }
+    {
+        int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+        Texture2D bottom_bar = { current_texture_id, ui_bottom_bar_width, ui_bottom_bar_height, 1, 7 };
+        screen_data_textures_current_idx += 1;
+        DrawTexture(bottom_bar, 0, 1080 - bottom_bar.height, WHITE);
+    }
+    {
+        int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+        Texture2D play_button = { current_texture_id, ui_play_button_width, ui_play_button_height, 1, 7 };
+        screen_data_textures_current_idx += 1;
+        Vector2 position = { ((1920)/2) - ((ui_play_button_width/3)/2), 1080 - 62 - play_button.height/2 + 5 };
+        Rectangle button_rec = { position.x, position.y, play_button.width/3, play_button.height };
+        if(CheckCollisionPointRec(GetMousePosition(), button_rec)){
+            if(IsMouseButtonDown(0)){
+                DrawTextureRec(play_button, ui_play_button_rectangle_pressed, position, WHITE);
+            }else{
+                DrawTextureRec(play_button, ui_play_button_rectangle_hovered, position, WHITE);
+            }
+        }else{
+            DrawTextureRec(play_button, ui_play_button_rectangle, position, WHITE);
+        }
+        DrawTextEx(screen_data_font, "PLAY", (Vector2){ position.x + (play_button.width/3)/2 - 2*(48/math_data_phi), position.y + 25}, 48, 1, WHITE);
+    }
+
+    {
+        int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
+        Texture2D symbols_right = { current_texture_id, ui_symbols_width, ui_symbols_height, 1, 7 };
+        screen_data_textures_current_idx += 1;
+        Vector2 position = { 1920 - (symbols_right.width/2), 1080 - (symbols_right.height) };
+        DrawTextureRec(symbols_right, ui_symbols_rectangle, position, WHITE);
     }
 }
 
-void ui_main_menu_render_texture_load(const int in_width, const int in_height, struct data_ui_main_menu* out_data){
-    RenderTexture2D render_texture = LoadRenderTexture(ui_symbols_width, ui_symbols_height);
-    out_data->render_textures_ids[out_data->textures_loaded_count] = render_texture.id;
-    out_data->render_textures_loaded_count += 1;
-}
-
-void ui_main_menu_render_textures_unload(struct data_ui_main_menu* out_data){
-    for(unsigned short i = data_ui_main_menu.render_textures_loaded_count; i > 0; --i){
-        RenderTexture2D symbols_render_tex = (RenderTexture2D){ data_ui_main_menu.render_textures_ids[i-1], {0,0,0,0,0}, {0,0,0,0,0}, 0};
-        UnloadRenderTexture(symbols_render_tex);
-    }
-}
-
-
-const struct ui_main_menu {
-    struct data_ui_main_menu* const data;
-    void (*const texture_load)(const char* in_path, struct data_ui_main_menu* out_data);
-    void (*const textures_unload)(struct data_ui_main_menu* out_data);
-    void (*const render_texture_load)(const int in_width, const int in_height, struct data_ui_main_menu* out_data);
-    void (*const render_textures_unload)(struct data_ui_main_menu* out_data);
-} ui_main_menu = {
-    .data                   = &data_ui_main_menu,
-    .texture_load           = ui_main_menu_texture_load,
-    .textures_unload        = ui_main_menu_render_textures_unload,
-    .render_texture_load    = ui_main_menu_render_texture_load,
-    .render_textures_unload = ui_main_menu_render_textures_unload,
-};
+#endif // UI_MAIN_MENU_H

@@ -1,15 +1,14 @@
 #include "logging.c"
-#include "data_logging.c"
 
 int main(int argc, char** argv){
-    // clear the logging file (by default called log.html as the data_logging.file_name variable)
-    logging.flush(data_logging.file_name);
-    logging.open(data_logging.file, data_logging.file_name);
+    // clear the logging file (by default called log.html as the logging_data_file_name variable)
+    logging_flush(logging_data_file_name);
+    logging_open(logging_data_file, logging_data_file_name);
     
-    logging.write(data_logging.file, "red", "%s %ld", "this is a new stuff", 5165454);
+    logging_write(logging_data_file, "%s %ld", "this is a new stuff", 5165454);
     const char* html_content = "<em>this is a test in italic mode</em>";
-    logging.write(data_logging.file, "black", "%s", html_content);
+    logging_write(logging_data_file, "%s", html_content);
     
-    logging.close(data_logging.file);
+    logging_close(logging_data_file);
     return 0;
 }

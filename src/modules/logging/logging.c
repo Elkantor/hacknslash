@@ -1,38 +1,31 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#if defined _WIN32 && defined module_export
-    #define LOGGING __declspec(dllexport) // We are building logging as a win32 shared library (.dll)
-#elif defined _WIN32 && defined module_import
-    #define LOGGING __declspec(dllimport) // we are using logging as a win32 shared library (.dll)
-#else
-    #define LOGGING // We are building or using logging as a static library (or a shared one on linux)
-#endif
+/************************************* [DATA] *************************************************/
+void* logging_data_file             = 0L;
+const char* logging_data_file_name  = "log.html";
 
-void logging_flush(const char* in_file_name){
-    /*
-        flush the content from the log file by opening it in
-        writing mode, which erased the previous content, and
-        closing it as soon as it's opened
-    */
+
+/************************************* [PROCEDURES] *******************************************/
+static inline void logging_flush(const char* in_file_name){
     fclose(fopen(in_file_name, "w"));
 }
 
-void logging_close(FILE** out_log_file){
-    fclose(*out_log_file);
+static inline void logging_close(){
+    fclose(logging_data_file);
 }
 
-int logging_open(FILE** out_log_file, const char* in_file_name){
-    *out_log_file = fopen(in_file_name, "a");
-    if(*out_log_file == NULL){
+static inline int logging_open(const char* in_file_name){
+    logging_data_file = fopen(in_file_name, "a");
+    if(logging_data_file == NULL){
         printf("Can't open the logging file\n");
         return -1;
     }
     return 1;
 }
 
-int logging_write(FILE** out_log_file, const char* in_text, ...){
-    if(*out_log_file == NULL){
+int logging_write(const char* in_text, ...){
+    if(logging_data_file == NULL){
         printf("Can't write in the logging file\n");
         return -1;
     }
@@ -46,20 +39,7 @@ int logging_write(FILE** out_log_file, const char* in_text, ...){
     va_list args;
     va_start(args, in_text);
     va_end(args);
-    vfprintf(*out_log_file, in_text, args);
-    fprintf(*out_log_file, "</br>");
+    vfprintf(logging_data_file, in_text, args);
+    fprintf(logging_data_file, "</br>");
     return 1;
 }
-
-
-const struct LOGGING logging {
-    void (*const flush)(const char* in_file_name);
-    void (*const close)(FILE** out_log_file);
-    int (*const open)(FILE** out_log_file, const char* in_file_name);
-    int (*const write)(FILE** out_log_file, const char* in_text, ...);
-} logging = {
-    .flush              = logging_flush,
-    .close              = logging_close,
-    .open               = logging_open,
-    .write              = logging_write,
-};
