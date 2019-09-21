@@ -1,3 +1,6 @@
+#ifndef MODULE_LOGGING_H
+#define MODULE_LOGGING_H
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -43,3 +46,5 @@ int logging_write(const char* in_text, ...){
     fprintf(logging_data_file, "</br>");
     return 1;
 }
+
+#endif // MODULE_LOGGING_H
