@@ -14,6 +14,7 @@ _Bool ui_main_menu_loaded = false;
 
 /************************************* [PROCEDURES] *******************************************/
 static inline void ui_main_menu_load(void){
+    screen_data_textures_loaded_count = 0;
     /* 1 */ screen_texture_load("data/ui/main_menu/background.jpg");
     /* 2 */ screen_texture_load("data/ui/main_menu/logo.png");
     /* 3 */ screen_texture_load("data/ui/main_menu/character_selection/trim_textures/trim_arrow_left_select.png");
@@ -25,6 +26,7 @@ static inline void ui_main_menu_load(void){
     /* 9 */ screen_texture_load("data/ui/main_menu/symbols_right.png");
     /* 10 */ screen_texture_load_flip_horizontal("data/ui/main_menu/symbols_right.png");
 
+    screen_data_render_textures_loaded_count = 0;
     screen_render_texture_load(ui_arrow_width, ui_arrow_height);
 
     ui_main_menu_loaded = true;
@@ -37,6 +39,9 @@ static inline void ui_main_menu_unload(void){
 }
 
 void ui_main_menu_draw(void){
+    screen_data_textures_current_idx = 0;
+    screen_data_render_textures_current_idx = 0;
+
     {
         int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
         Texture2D background = { current_texture_id, ui_background_width, ui_background_height, 1, 7 };
@@ -108,6 +113,9 @@ void ui_main_menu_draw(void){
         if(CheckCollisionPointRec(GetMousePosition(), button_rec)){
             if(IsMouseButtonDown(0)){
                 DrawTextureRec(play_button, ui_play_button_rectangle_pressed, position, WHITE);
+                screen = SCREEN_GAME;
+                ui_main_menu_unload();
+                return;
             }else{
                 DrawTextureRec(play_button, ui_play_button_rectangle_hovered, position, WHITE);
             }
