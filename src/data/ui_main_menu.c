@@ -53,8 +53,17 @@ void ui_main_menu_draw(void){
             }
         }
 
-        Vector2 right_arrow_origin = { left_arrow.width/2, left_arrow.height/2};
-        DrawTexture
+        Vector2 position_right_arrow = { (1920/40)*38, 500 };
+        Rectangle dest = (Rectangle){position_right_arrow.x, position_right_arrow.y - ((left_arrow.height/3) *2), ui_arrow_rectangle.width, ui_arrow_rectangle.height};
+        DrawTexturePro(left_arrow, ui_arrow_rectangle, dest, (Vector2){left_arrow.width, left_arrow.height}, 180, WHITE);
+        Rectangle right_arrow_rec = { position_right_arrow.x, position_right_arrow.y, left_arrow.width, left_arrow.height/3 };
+        if(CheckCollisionPointRec(GetMousePosition(), right_arrow_rec)){
+            if(IsMouseButtonDown(0)){
+                DrawTexturePro(left_arrow, ui_arrow_rectangle_pressed, dest, (Vector2){left_arrow.width, left_arrow.height}, 180, WHITE);
+            }else{
+                DrawTexturePro(left_arrow, ui_arrow_rectangle_hovered, dest, (Vector2){left_arrow.width, left_arrow.height}, 180, WHITE);
+            }
+        }
     }
     // {
     //     int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
