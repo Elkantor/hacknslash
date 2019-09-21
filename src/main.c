@@ -9,11 +9,12 @@
 #include "modules/math/math.c"
 #include "modules/colors/colors.c"
 #include "modules/screen/screen.c"
+#include "data/game.c"
 #include "data/ui_main_menu.c"
 
 void custom_tracelog(const int in_msg_type, const char* in_text, const va_list in_args){
     logging_open(logging_data_file_name);
-
+    
     switch (in_msg_type){
         case LOG_INFO: logging_write("<u style='font-weight: bold;'>[INFO] : </u>"); break;
         case LOG_ERROR: logging_write("<u style='font-weight: bold'>[ERROR]: </u>"); break;
@@ -50,33 +51,24 @@ int main(int argc, char** argv){
     inputs_data_keys[inputs_data_key_right] = KEY_D;
     inputs_data_keys[inputs_data_key_left]  = KEY_Q;
     inputs_data_keys[inputs_data_key_space] = KEY_SPACE;
-    
-
-    float current_time = 0;
 
     /* MAIN LOOP */
     while(!WindowShouldClose()){
         BeginDrawing();
-            screen_data_textures_current_idx = 0;
             ClearBackground(WHITE);
             switch(screen){
-                case 0: ui_main_menu_draw(); break;
+                case SCREEN_MAIN_MENU: 
+                    if(ui_main_menu_loaded) ui_main_menu_draw();
+                    else ui_main_menu_load();
+                    break;
+                case SCREEN_GAME: 
+                    if(game_loaded) game_draw();
+                    else game_load();
+                    break;
                 default: break;
             }
-            
             DrawFPS(1800, 40);
         EndDrawing();
-
-        /* TMP TIMER FOR ANIMATIONS */
-        // current_time += GetFrameTime();
-        // logging.write(data_logging.file, "green", "<em style='font-weight: bold'>current_time: %f]</em>", current_time);
-        // if(current_time >= 0.16){
-        //     *data_screen.current_symbols_anim += 1;
-        //     if(*data_screen.current_symbols_anim > 15){
-        //         *data_screen.current_symbols_anim = 0;
-        //     }
-        //     current_time = 0;
-        // }
     }
 
     screen_render_textures_unload();
