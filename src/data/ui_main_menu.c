@@ -65,22 +65,6 @@ void ui_main_menu_draw(void){
             }
         }
     }
-    // {
-    //     int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
-    //     // Texture2D right_arrow = { current_texture_id, ui_arrow_width, ui_arrow_height, 1, 7 };
-    //     Texture2D right_arrow_tex = { current_texture_id, ui_arrow_width, ui_arrow_height, 1, 7 };
-    //     screen_data_textures_current_idx += 1;
-    //     Vector2 position = { (1920/40)*39 - right_arrow_tex.width, 500 };
-    //     Rectangle right_arrow_rec = { position.x, position.y, right_arrow_tex.width, right_arrow_tex.height/3 };
-    //     DrawTextureRec(right_arrow_tex, ui_arrow_rectangle, position, WHITE);
-    //     if(CheckCollisionPointRec(GetMousePosition(), right_arrow_rec)){
-    //         if(IsMouseButtonDown(0)){
-    //             DrawTextureRec(right_arrow_tex, ui_arrow_rectangle_pressed, position, WHITE);
-    //         }else{
-    //             DrawTextureRec(right_arrow_tex, ui_arrow_rectangle_hovered, position, WHITE);
-    //         }
-    //     }
-    // }
     {
         int current_texture_id = screen_data_textures_ids[screen_data_textures_current_idx];
         Texture2D bottom_bar = { current_texture_id, ui_bottom_bar_width, ui_bottom_bar_height, 1, 7 };
