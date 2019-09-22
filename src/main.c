@@ -1,11 +1,11 @@
 #include <raylib.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "data.c"
 
-#include "modules/inputs/inputs.c"
 #include "modules/logging/logging.c"
+#include "modules/database/database.c"
+#include "modules/inputs/inputs.c"
 #include "modules/math/math.c"
 #include "modules/colors/colors.c"
 #include "modules/screen/screen.c"
@@ -33,11 +33,14 @@ int main(int argc, char** argv){
     logging_write("<h1>[LOG]</h2>\n");
     logging_close();
 
+    /* INITIALIZE THE DATABASE */
+    database_load();
+
     /* INITIALIZE RAYLIB AND OPENGL CONTEXT */
     InitWindow(0, 0, "hacknslash");
-    SetTraceLogLevel(LOG_NONE);
+    SetTraceLogLevel(LOG_INFO);
     SetTraceLogCallback(custom_tracelog);
-    SetTargetFPS(60);
+    SetTargetFPS(200);
     
     screen_data_font = LoadFontEx("./data/ui/Fonts/constantia_regular.ttf", 48, 0L, 95);
     // Color color_ui = GetColor(data_colors.light_gray_ui);
@@ -52,6 +55,7 @@ int main(int argc, char** argv){
     inputs_data_keys[inputs_data_key_left]  = KEY_Q;
     inputs_data_keys[inputs_data_key_space] = KEY_SPACE;
 
+    screen = SCREEN_GAME;
     /* MAIN LOOP */
     while(!WindowShouldClose()){
         BeginDrawing();
@@ -71,8 +75,13 @@ int main(int argc, char** argv){
         EndDrawing();
     }
 
+    /* UNLOAD THE SCREEN RESSOURCES */
     screen_render_textures_unload();
     screen_textures_unload();
+
+    /* UNLOAD THE DATABASE */
+    database_unload();
+
     UnloadFont(screen_data_font);
     CloseWindow();
     return 0;
