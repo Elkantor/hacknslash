@@ -1,11 +1,9 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#if !defined RAYLIB_H
-    #include <raylib.h>
-#endif
+#include <raylib.h>
 
-#include "../logging/logging.c"
+#include "modules/logging/logging.c"
 
 /************************************* [DATA] *************************************************/
 typedef enum screen_current_id { 
@@ -15,7 +13,7 @@ typedef enum screen_current_id {
 
 screen_current_id screen                                    = SCREEN_MAIN_MENU;
 Font screen_data_font;
-unsigned int screen_data_textures_ids[12]                   = {0};
+unsigned int screen_data_textures_ids[20]                   = {0};
 unsigned short screen_data_textures_loaded_count            = 0;
 unsigned short screen_data_textures_current_idx             = 0;
 unsigned int screen_data_render_textures_ids[1]             = {0};
@@ -69,7 +67,7 @@ static inline void screen_textures_unload(){
     logging_write("</br>\n");
     for(unsigned short i = screen_data_textures_loaded_count; i > 0; --i){
         Texture2D texture = (Texture2D){ screen_data_textures_ids[i-1], 0, 0, 1, 7 };
-        logging_write("<em style='color: green;'>texture unloaded\t%d\n", texture.id);
+        logging_write("<em style='color: green;'>texture unloaded\t%d</em>\n", texture.id);
         UnloadTexture(texture);
          screen_data_textures_ids[i-1] = 0;
     }
