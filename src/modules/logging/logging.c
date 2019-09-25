@@ -10,16 +10,16 @@ const char* logging_data_file_name  = "log.html";
 
 
 /************************************* [PROCEDURES] *******************************************/
-static inline void logging_flush(const char* in_file_name){
-    fclose(fopen(in_file_name, "w"));
+static inline void logging_flush(){
+    fclose(fopen(logging_data_file_name, "w"));
 }
 
 static inline void logging_close(){
     fclose(logging_data_file);
 }
 
-static inline int logging_open(const char* in_file_name){
-    logging_data_file = fopen(in_file_name, "a");
+static inline int logging_open(){
+    logging_data_file = fopen(logging_data_file_name, "a");
     if(logging_data_file == NULL){
         printf("Can't open the logging file\n");
         return -1;

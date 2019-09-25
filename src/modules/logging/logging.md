@@ -9,10 +9,10 @@ Associated data which can be used by this module are inside the **[src/data/data
 ---
 
 ### functions
-- <em>void logging_flush(const char* in_file_name)</em>
-- <em>int logging_open(const char* in_file_name)</em>
+- <em>void logging_flush()</em>
+- <em>int logging_open()</em>
 - <em>int logging_write(const char* in_text, ...)</em>
-- <em>void logging_close()](#void-closefile-out_log_file)</em>
+- <em>void logging_close()</em>
 
 ## Full example in practice:
 
@@ -20,9 +20,9 @@ Associated data which can be used by this module are inside the **[src/data/data
     #include "src/modules/logging.c"
 
     int main(int argc, char** argv){
-        // clear the logging file (by default called log.html as the logging_data_file_name variable)
-        logging_flush(logging_data_file_name);
-        logging_open(logging_data_file_name.file_name);
+        // clear the logging file (by default called log.html, to modify, change the char* value of the logging_data_file_name variable)
+        logging_flush();
+        logging_open();
         
         logging_write("<div style='color: red;'>%s %ld</div>", "this is a new stuff", 5165454);
         const char* html_content = "<em>this is a test in italic mode</em>";
