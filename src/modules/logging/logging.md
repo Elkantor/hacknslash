@@ -20,9 +20,9 @@ Associated data which can be used by this module are inside the **[src/data/data
     #include "src/modules/logging.c"
 
     int main(int argc, char** argv){
-        // clear the logging file (by default called log.html as the data_logging.file_name variable)
-        logging_flush(data_logging.file_name);
-        logging_open(data_logging.file_name);
+        // clear the logging file (by default called log.html as the logging_data_file_name variable)
+        logging_flush(logging_data_file_name);
+        logging_open(logging_data_file_name.file_name);
         
         logging_write("<div style='color: red;'>%s %ld</div>", "this is a new stuff", 5165454);
         const char* html_content = "<em>this is a test in italic mode</em>";
