@@ -13,18 +13,18 @@ sqlite3_stmt* database_statement;
 void database_load(void){
     int result = sqlite3_open(database_path, &database_ptr);
     if(result){
-        logging_open(logging_data_file_name);
+        logging_open();
         logging_write("Can't open database: %s", sqlite3_errmsg(database_ptr));
         logging_close(logging_data_file);  
     }else{
-        logging_open(logging_data_file_name);
+        logging_open();
         logging_write("Database opened successfully");
         logging_close(logging_data_file);  
     }
 }
 
 void database_unload(void){
-    logging_open(logging_data_file_name);
+    logging_open();
     logging_write("Database closed successfully");
     logging_close(logging_data_file); 
     sqlite3_close(database_ptr);

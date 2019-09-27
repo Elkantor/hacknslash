@@ -36,7 +36,7 @@ static inline void ui_main_menu_unload(void){
     screen_render_textures_unload();
     screen_textures_unload();
     ui_main_menu_loaded = false;
-    logging_open(logging_data_file_name);
+    logging_open();
     logging_write("<strong>ui_main_menu successfully unloaded</strong>");
     logging_close();
 }
