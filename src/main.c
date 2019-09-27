@@ -33,8 +33,6 @@ int main(int argc, char** argv){
     logging_open();
     logging_write("<h1>[LOG]</h2>\n");
     logging_close();
-
-    database_load();
     
     inputs_action_bind(inputs_data_action_up, KEY_Z);
     inputs_action_bind(inputs_data_action_down, KEY_S);
@@ -75,8 +73,6 @@ int main(int argc, char** argv){
     /* UNLOAD THE SCREEN RESSOURCES */
     screen_render_textures_unload();
     screen_textures_unload();
-
-    database_unload();
 
     UnloadFont(screen_data_font);
     CloseWindow();
