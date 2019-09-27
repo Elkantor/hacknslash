@@ -6,6 +6,7 @@
 #include "modules/logging/logging.c"
 #include "modules/database/database.c"
 #include "modules/inputs/inputs.c"
+#include "modules/player/player.c"
 #include "modules/math/math.c"
 #include "modules/colors/colors.c"
 #include "modules/screen/screen.c"
@@ -13,7 +14,7 @@
 #include "data/ui_main_menu.c"
 
 void custom_tracelog(const int in_msg_type, const char* in_text, const va_list in_args){
-    logging_open(logging_data_file_name);
+    logging_open();
     
     switch (in_msg_type){
         case LOG_INFO: logging_write("<u style='font-weight: bold;'>[INFO] : </u>"); break;
@@ -28,40 +29,36 @@ void custom_tracelog(const int in_msg_type, const char* in_text, const va_list i
 
 int main(int argc, char** argv){
     /* INITIALIZE LOGGING SYSTEM (ONLY FOR DEBUGGING)*/
-    logging_flush(logging_data_file_name);
-    logging_open(logging_data_file_name);
+    logging_flush();
+    logging_open();
     logging_write("<h1>[LOG]</h2>\n");
     logging_close();
 
-    /* INITIALIZE THE DATABASE */
     database_load();
+    
+    inputs_action_bind(inputs_data_action_up, KEY_Z);
+    inputs_action_bind(inputs_data_action_down, KEY_S);
+    inputs_action_bind(inputs_data_action_right, KEY_D);
+    inputs_action_bind(inputs_data_action_left, KEY_Q);
+    inputs_action_bind(inputs_data_action_space, KEY_SPACE);
 
-    /* INITIALIZE RAYLIB AND OPENGL CONTEXT */
     InitWindow(0, 0, "hacknslash");
     SetTraceLogLevel(LOG_INFO);
     SetTraceLogCallback(custom_tracelog);
     SetTargetFPS(200);
     
     screen_data_font = LoadFontEx("./data/ui/Fonts/constantia_regular.ttf", 48, 0L, 95);
-    // Color color_ui = GetColor(data_colors.light_gray_ui);
     ui_main_menu_load();
 
-    Shader shader = LoadShader(0, "data/shaders/grayscale.fs");
-    
-    /* INITIALIZE DEFAULT KEYS BINDING */
-    inputs_data_keys[inputs_data_key_up]    = KEY_Z;
-    inputs_data_keys[inputs_data_key_down]  = KEY_S;
-    inputs_data_keys[inputs_data_key_right] = KEY_D;
-    inputs_data_keys[inputs_data_key_left]  = KEY_Q;
-    inputs_data_keys[inputs_data_key_space] = KEY_SPACE;
-
-    screen = SCREEN_GAME;
     /* MAIN LOOP */
     while(!WindowShouldClose()){
+        inputs_actions_get_current();
+        player_actions_handle(inputs_data_actions);
+
         BeginDrawing();
             ClearBackground(WHITE);
             switch(screen){
-                case SCREEN_MAIN_MENU: 
+                case SCREEN_MAIN_MENU:  
                     if(ui_main_menu_loaded) ui_main_menu_draw();
                     else ui_main_menu_load();
                     break;
@@ -79,7 +76,6 @@ int main(int argc, char** argv){
     screen_render_textures_unload();
     screen_textures_unload();
 
-    /* UNLOAD THE DATABASE */
     database_unload();
 
     UnloadFont(screen_data_font);

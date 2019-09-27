@@ -1,25 +1,36 @@
-/************************************* [DATA] *************************************************/
-int inputs_data_keys[5];
+#ifndef MODULE_INPUTS_H
+#define MODULE_INPUTS_H
 
-const unsigned short inputs_data_key_up = 0;
-const unsigned short inputs_data_key_down = 1;
-const unsigned short inputs_data_key_right = 2;
-const unsigned short inputs_data_key_left = 3;
-const unsigned short inputs_data_key_space = 4;
+/************************************* [DATA] *************************************************/
+int inputs_data_actions[5];
+int inputs_data_current_actions[2];
+
+#define inputs_data_action_up    0
+#define inputs_data_action_down  1
+#define inputs_data_action_right 2
+#define inputs_data_action_left  3
+#define inputs_data_action_space 4
 
 /************************************* [PROCEDURES] *******************************************/
-void inputs_action_handle(int out_actions[2]){
-    out_actions[0] = -1;
-    out_actions[1] = -1;
+static inline void inputs_action_bind(const int in_action, const int in_key){
+    inputs_data_actions[in_action] = in_key;
+}
+
+static inline int inputs_actions_get_current(){
+    inputs_data_current_actions[0] = -1;
+    inputs_data_current_actions[1] = -1;
 
     int number_keys_pressed = 0;
 
     // get the action coresponding to each key pressed if it exists
-    for(int i = 0; i < sizeof(inputs_data_keys)/sizeof(inputs_data_keys[0]); ++i){
+    for(int i = 0; i < sizeof(inputs_data_actions)/sizeof(inputs_data_actions[0]); ++i){
         // const int current_key = in_keys[i];
         if(number_keys_pressed < 2){
-            out_actions[number_keys_pressed] = i;
+            inputs_data_current_actions[number_keys_pressed] = i;
             number_keys_pressed++;
         }
     }
+    return number_keys_pressed;
 }
+
+#endif // MODULE_INPUTS_H
