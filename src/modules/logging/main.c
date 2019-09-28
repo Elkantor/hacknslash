@@ -1,6 +1,7 @@
 #include "logging.c"
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
     // clear the logging file (by default called log.html, to modify, change the char* value of the logging_data_file_name variable)
     logging_flush();
     logging_open();
