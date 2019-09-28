@@ -9,4 +9,4 @@
 ########################################################################################
 
 windows:
-	gcc -Wall -std=c99 src/main.c -L./libs/windows -I./src/extern -I./src -mwindows -lopengl32 -lgdi32 -lraylib -lwinmm -lsqlite3
+	gcc -Wall -std=c99 src/main.c -L./libs/windows -I./src/extern -I./src -mwindows -lopengl32 -lgdi32 -lraylib -lwinmm
