@@ -2,16 +2,15 @@
 #define SCREEN_H
 
 #include <raylib.h>
+#include <stdint.h>
 
 #include "modules/logging/logging.c"
 
 /************************************* [DATA] *************************************************/
-typedef enum screen_current_id { 
-    SCREEN_MAIN_MENU,
-    SCREEN_GAME,
-} screen_current_id;
+#define screen_data_main_menu   0
+#define screen_data_game        1    
 
-screen_current_id screen                                    = SCREEN_MAIN_MENU;
+uint8_t screen                                              = screen_data_main_menu;
 Font screen_data_font;
 unsigned int screen_data_textures_ids[20]                   = {0};
 unsigned short screen_data_textures_loaded_count            = 0;
@@ -22,7 +21,8 @@ unsigned short screen_data_render_textures_current_idx      = 0;
 
 
 /************************************* [PROCEDURES] *******************************************/
-static inline void screen_texture_load(const char* in_path){
+static inline void screen_texture_load(const char* in_path)
+{
     Texture2D texture = LoadTexture(in_path);
     screen_data_textures_ids[screen_data_textures_loaded_count] = texture.id;
     screen_data_textures_loaded_count += 1;
@@ -34,7 +34,8 @@ static inline void screen_texture_load(const char* in_path){
     logging_close();
 }
 
-static inline void screen_texture_load_flip_horizontal(const char* in_path){
+static inline void screen_texture_load_flip_horizontal(const char* in_path)
+{
     Image image = LoadImage(in_path);
     ImageFlipHorizontal(&image);
     Texture texture = LoadTextureFromImage(image);
@@ -48,7 +49,8 @@ static inline void screen_texture_load_flip_horizontal(const char* in_path){
     logging_close();
 }
 
-static inline void screen_texture_load_flip_vertical(const char* in_path){
+static inline void screen_texture_load_flip_vertical(const char* in_path)
+{
     Image image = LoadImage(in_path);
     ImageFlipVertical(&image);
     Texture texture = LoadTextureFromImage(image);
@@ -62,7 +64,8 @@ static inline void screen_texture_load_flip_vertical(const char* in_path){
     logging_close();
 }
 
-static inline void screen_textures_unload(){
+static inline void screen_textures_unload()
+{
     logging_open();
     logging_write("</br>\n");
     for(unsigned short i = screen_data_textures_loaded_count; i > 0; --i){
@@ -74,13 +77,15 @@ static inline void screen_textures_unload(){
     logging_close();
 }
 
-static inline void screen_render_texture_load(const int in_width, const int in_height){
+static inline void screen_render_texture_load(const int in_width, const int in_height)
+{
     RenderTexture2D render_texture = LoadRenderTexture(in_width, in_height);
     screen_data_render_textures_ids[screen_data_textures_loaded_count] = render_texture.id;
     screen_data_render_textures_loaded_count += 1;
 }
 
-static inline void screen_render_textures_unload(){
+static inline void screen_render_textures_unload()
+{
     for(unsigned short i = screen_data_render_textures_loaded_count; i > 0; --i){
         RenderTexture2D render_texture = (RenderTexture2D){ screen_data_render_textures_ids[i-1], {0,0,0,0,0}, {0,0,0,0,0}, 0};
         UnloadRenderTexture(render_texture);
