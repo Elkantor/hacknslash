@@ -1,10 +1,10 @@
 #include <raylib.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "data.c"
 
 #include "modules/logging/logging.c"
-#include "modules/database/database.c"
 #include "modules/inputs/inputs.c"
 #include "modules/player/player.c"
 #include "modules/math/math.c"
@@ -13,7 +13,8 @@
 #include "data/game.c"
 #include "data/ui_main_menu.c"
 
-void custom_tracelog(const int in_msg_type, const char* in_text, const va_list in_args){
+void custom_tracelog(const int in_msg_type, const char* in_text, const va_list in_args)
+{
     logging_open();
     
     switch (in_msg_type){
@@ -27,21 +28,23 @@ void custom_tracelog(const int in_msg_type, const char* in_text, const va_list i
     logging_close();
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
     /* INITIALIZE LOGGING SYSTEM (ONLY FOR DEBUGGING)*/
     logging_flush();
     logging_open();
     logging_write("<h1>[LOG]</h2>\n");
     logging_close();
     
-    inputs_action_bind(inputs_data_action_up, KEY_Z);
-    inputs_action_bind(inputs_data_action_down, KEY_S);
-    inputs_action_bind(inputs_data_action_right, KEY_D);
-    inputs_action_bind(inputs_data_action_left, KEY_Q);
+    
+    inputs_action_bind(inputs_data_action_up, 87);          // Z in azerty
+    inputs_action_bind(inputs_data_action_down, 83);        // S in azerty
+    inputs_action_bind(inputs_data_action_right, 68);       // D in azerty  
+    inputs_action_bind(inputs_data_action_left, 65);        // Q in azerty
     inputs_action_bind(inputs_data_action_space, KEY_SPACE);
 
     InitWindow(0, 0, "hacknslash");
-    SetTraceLogLevel(LOG_INFO);
+    SetTraceLogLevel(LOG_NONE);
     SetTraceLogCallback(custom_tracelog);
     SetTargetFPS(200);
     
@@ -50,17 +53,19 @@ int main(int argc, char** argv){
 
     /* MAIN LOOP */
     while(!WindowShouldClose()){
-        inputs_actions_get_current();
-        player_actions_handle(inputs_data_actions);
+        if(screen == screen_data_game){
+            uint16_t actions_bitwise = inputs_actions_get();
+            player_movements_handle(actions_bitwise);
+        }
 
         BeginDrawing();
             ClearBackground(WHITE);
             switch(screen){
-                case SCREEN_MAIN_MENU:  
+                case screen_data_main_menu:  
                     if(ui_main_menu_loaded) ui_main_menu_draw();
                     else ui_main_menu_load();
                     break;
-                case SCREEN_GAME: 
+                case screen_data_game: 
                     if(game_loaded) game_draw();
                     else game_load();
                     break;
