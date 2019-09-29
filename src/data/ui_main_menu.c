@@ -116,7 +116,7 @@ void ui_main_menu_draw(void){
         if(CheckCollisionPointRec(GetMousePosition(), button_rec)){
             if(IsMouseButtonDown(0)){
                 DrawTextureRec(play_button, ui_play_button_rectangle_pressed, position, WHITE);
-                screen = SCREEN_GAME;
+                screen = screen_data_game;
                 ui_main_menu_unload();
                 return;
             }else{
