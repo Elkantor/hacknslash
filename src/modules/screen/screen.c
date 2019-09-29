@@ -27,7 +27,7 @@ static inline void screen_texture_load(const char* in_path)
     screen_data_textures_ids[screen_data_textures_loaded_count] = texture.id;
     screen_data_textures_loaded_count += 1;
     logging_open();
-    logging_write("</br><div style='display: flex;'>");
+    logging_write("<div style='display: flex;'>");
     logging_write("<div style='flex: 1 1 auto; color: blue;'>texture loaded\t%d</div>\n", texture.id);
     logging_write("<div style='flex: 1 1 auto; color: darkgray;'>%s</div>\n", in_path);
     logging_write("</div>");
