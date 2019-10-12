@@ -3,11 +3,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-
-/************************************* [DATA] *************************************************/
-void* logging_data_file             = 0L;
-const char* logging_data_file_name  = "log.html";
-
+#include "data.c"
 
 /************************************* [PROCEDURES] *******************************************/
 static inline void logging_flush(){
@@ -27,7 +23,7 @@ static inline int logging_open(){
     return 1;
 }
 
-int logging_write(const char* in_text, ...){
+static int logging_write(const char* in_text, ...){
     if(logging_data_file == NULL){
         printf("Can't write in the logging file\n");
         return -1;

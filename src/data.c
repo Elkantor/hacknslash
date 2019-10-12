@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-/* This file contains every definition for the textures data and sounds */
+/* This file contains every data for the game */
 
 /************************************* [UI] *****************************************************/
 
@@ -394,5 +394,42 @@
 
 /************************************* [END CHARACTER] ******************************************/
 
+/************************************* [INPUTS] *************************************************/
+    int inputs_data_actions[5];
+
+    #define inputs_data_action_up    1
+    #define inputs_data_action_down  2
+    #define inputs_data_action_right 3
+    #define inputs_data_action_left  4
+    #define inputs_data_action_space 5
+
+    #define inputs_data_azerty_z 87
+    #define inputs_data_azerty_s 83
+    #define inputs_data_azerty_d 68
+    #define inputs_data_azerty_q 65
+
+    #define inputs_data_qwerty_w 87
+    #define inputs_data_qwerty_s 83
+    #define inputs_data_qwerty_d 68
+    #define inputs_data_qwerty_a 65
+/************************************* [END INPUTS] *********************************************/
+
+/************************************* [LOGGING] ************************************************/
+    void* logging_data_file             = 0L;
+    const char* logging_data_file_name  = "log.html";
+/************************************* [END LOGGING] ********************************************/
+
+/************************************* [PLAYER] *************************************************/
+    #define player_data_width 150
+    #define player_data_height 150
+
+    /* 8 directions stored clock-wise. 0 is top, 1 is top-right, 2 is right... 7 is top-left */
+    uint8_t player_data_direction            = 4; // set the direction to bottom by default
+    uint8_t player_data_previous_direction   = 0;
+
+    float player_data_x = 150;
+    float player_data_y = 150;
+    unsigned short player_data_idx_color = 0;
+/************************************* [END PLAYER] *********************************************/
 
 #endif // DATA_H
