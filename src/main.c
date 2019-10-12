@@ -37,16 +37,16 @@ int main(int argc, char** argv)
     logging_close();
     
     
-    inputs_action_bind(inputs_data_action_up, 87);          // Z in azerty
-    inputs_action_bind(inputs_data_action_down, 83);        // S in azerty
-    inputs_action_bind(inputs_data_action_right, 68);       // D in azerty  
-    inputs_action_bind(inputs_data_action_left, 65);        // Q in azerty
+    inputs_action_bind(inputs_data_action_up, inputs_data_qwerty_w);
+    inputs_action_bind(inputs_data_action_down, inputs_data_qwerty_s);
+    inputs_action_bind(inputs_data_action_right, inputs_data_qwerty_d);
+    inputs_action_bind(inputs_data_action_left, inputs_data_qwerty_a);
     inputs_action_bind(inputs_data_action_space, KEY_SPACE);
 
     InitWindow(0, 0, "hacknslash");
     SetTraceLogLevel(LOG_NONE);
-    SetTraceLogCallback(custom_tracelog);
-    SetTargetFPS(200);
+    // SetTraceLogCallback(custom_tracelog);
+    SetTargetFPS(60);
     
     screen_data_font = LoadFontEx("./data/ui/Fonts/constantia_regular.ttf", 48, 0L, 95);
     ui_main_menu_load();

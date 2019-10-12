@@ -3,15 +3,7 @@
 
 #include <stdint.h>
 #include <raylib.h>
-
-/************************************* [DATA] *************************************************/
-int inputs_data_actions[5];
-
-#define inputs_data_action_up    1
-#define inputs_data_action_down  2
-#define inputs_data_action_right 3
-#define inputs_data_action_left  4
-#define inputs_data_action_space 5
+#include "data.c"
 
 /************************************* [PROCEDURES] *******************************************/
 static inline void inputs_action_bind(const int in_action, const int in_key){
@@ -31,7 +23,7 @@ static inline uint16_t inputs_actions_get(){
     for(int i = 0; i < sizeof(inputs_data_actions)/sizeof(inputs_data_actions[0]); ++i){
         if(number_keys_pressed < 2){
             if(IsKeyDown(inputs_data_actions[i])){
-                actions_bitwise = (1 << i) | actions_bitwise; // set the i bit (action flag) of the actions variable to 1
+                actions_bitwise = (1 << (i+1)) | actions_bitwise; // set the i bit (action flag) of the actions variable to 1
                 number_keys_pressed += 1;
             }
         }else{
