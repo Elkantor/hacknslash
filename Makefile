@@ -10,3 +10,6 @@
 
 windows:
 	gcc -Wall -std=c99 src/main.c -L./libs/windows -I./src/extern -I./src -mwindows -lopengl32 -lgdi32 -lraylib -lwinmm
+
+linux:
+	gcc -Wall -std=c99 src/main.c -L./libs/linux -I./src/extern -I./src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
