@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     inputs_action_bind(inputs_data_action_space, KEY_SPACE);
 
     InitWindow(0, 0, "hacknslash");
-    SetTraceLogLevel(LOG_NONE);
+    SetTraceLogLevel(LOG_INFO);
     // SetTraceLogCallback(custom_tracelog);
     SetTargetFPS(60);
     
@@ -54,6 +54,7 @@ int main(int argc, char** argv)
     /* MAIN LOOP */
     while(!WindowShouldClose()){
         if(screen == screen_data_game){
+            inputs_mouse_handle();
             uint16_t actions_bitwise = inputs_actions_get();
             player_movements_handle(actions_bitwise);
         }
@@ -72,6 +73,9 @@ int main(int argc, char** argv)
                 default: break;
             }
             DrawFPS(1800, 40);
+            if(game_loaded){
+                DrawLine(player_data_x + player_data_width/2, player_data_y + player_data_height/2, player_data_target_x, player_data_target_y, GREEN);
+            }
         EndDrawing();
     }
 

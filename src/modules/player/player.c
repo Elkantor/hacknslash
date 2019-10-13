@@ -5,7 +5,6 @@
 #include "data.c"
 
 /************************************* [PROCEDURES] *******************************************/
-
 static inline void player_movements_handle(const int8_t in_directions_bitwise)
 {
     if((in_directions_bitwise >> 1) & 1){     // direction == up

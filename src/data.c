@@ -429,6 +429,8 @@
 
     float player_data_x = 150;
     float player_data_y = 150;
+    float player_data_target_x = 0;
+    float player_data_target_y = 0;
     unsigned short player_data_idx_color = 0;
 /************************************* [END PLAYER] *********************************************/
 
