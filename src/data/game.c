@@ -54,7 +54,7 @@ void game_draw(void)
         Texture2D knight_texture = { current_texture_id, character_knight_idle_textures_widths[player_data_direction], character_knight_idle_textures_heights[player_data_direction], 1, 7 };
 
         Vector2 adjusted_position = character_adjust_positions[(character_knight_idle_start_idx + player_data_direction) * character_knight_idle_animations + game_character_animation_knight_idle];
-        Vector2 position = {300 + adjusted_position.x + player_data_x, 300 + adjusted_position.y + player_data_y};
+        Vector2 position = {adjusted_position.x + player_data_x, adjusted_position.y + player_data_y};
         
         Rectangle current_sprite = character_rectangles[(character_knight_idle_start_idx + player_data_direction) * character_knight_idle_animations + game_character_animation_knight_idle];
         DrawTextureRec(knight_texture, current_sprite, position, WHITE);
